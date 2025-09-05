@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SitFit - Posture & Health Reminder</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-chair"></i>
+                <h1>SitFit</h1>
+            </div>
+            <div class="status-indicator">
+                <span id="connectionStatus" class="status offline">Offline</span>
+            </div>
+        </header>
+
+        <!-- Main Dashboard -->
+        <main class="dashboard">
+            <!-- Quick Actions -->
+            <section class="quick-actions">
+                <button id="quickStart" class="quick-btn primary">
+                    <i class="fas fa-play"></i>
+                    Quick Start (30min)
+                </button>
+                <button id="pauseAll" class="quick-btn secondary">
+                    <i class="fas fa-pause"></i>
+                    Pause All
+                </button>
+                <button id="stopAll" class="quick-btn danger">
+                    <i class="fas fa-stop"></i>
+                    Stop All
+                </button>
+            </section>
+
+            <!-- Active Timers Display -->
+            <section class="active-timers">
+                <h2><i class="fas fa-clock"></i> Active Reminders</h2>
+                <div id="activeTimersList" class="timers-list">
+                    <div class="no-timers">
+                        <i class="fas fa-clock-o"></i>
+                        <p>No active reminders</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Timer Creation -->
+            <section class="timer-creation">
+                <h2><i class="fas fa-plus-circle"></i> Create New Reminder</h2>
+                
+                <div class="form-group">
+                    <label for="reminderType">Reminder Type</label>
+                    <select id="reminderType">
+                        <option value="posture">🪑 Posture Check</option>
+                        <option value="stretch">🤸 Stretch Break</option>
+                        <option value="water">💧 Drink Water</option>
+                        <option value="walk">🚶 Walk Break</option>
+                        <option value="eye">👁️ Eye Rest</option>
+                        <option value="breathing">🫁 Breathing Exercise</option>
+                        <option value="custom">⚙️ Custom Reminder</option>
+                    </select>
+                </div>
+
+                <div id="customMessage" class="form-group" style="display: none;">
+                    <label for="customText">Custom Message</label>
+                    <input type="text" id="customText" placeholder="Enter your custom reminder message">
+                </div>
+
+                <div class="time-inputs">
+                    <div class="form-group">
+                        <label for="hours">Hours</label>
+                        <input type="number" id="hours" min="0" max="23" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="minutes">Minutes</label>
+                        <input type="number" id="minutes" min="0" max="59" value="30">
+                    </div>
+                    <div class="form-group">
+                        <label for="seconds">Seconds</label>
+                        <input type="number" id="seconds" min="0" max="59" value="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="repeatDaily"> 
+                        Repeat Daily
+                    </label>
+                </div>
+
+                <div id="weekdaysSection" class="form-group" style="display: none;">
+                    <label>Select Days</label>
+                    <div class="weekdays">
+                        <label><input type="checkbox" value="1"> Monday</label>
+                        <label><input type="checkbox" value="2"> Tuesday</label>
+                        <label><input type="checkbox" value="3"> Wednesday</label>
+                        <label><input type="checkbox" value="4"> Thursday</label>
+                        <label><input type="checkbox" value="5"> Friday</label>
+                        <label><input type="checkbox" value="6"> Saturday</label>
+                        <label><input type="checkbox" value="0"> Sunday</label>
+                    </div>
+                </div>
+
+                <div class="alarm-settings">
+                    <h3><i class="fas fa-volume-up"></i> Alarm Settings</h3>
+                    <div class="form-group">
+                        <label for="alarmSound">Alarm Sound</label>
+                        <select id="alarmSound">
+                            <option value="beep">Beep</option>
+                            <option value="chime">Chime</option>
+                            <option value="bell">Bell</option>
+                            <option value="nature">Nature</option>
+                            <option value="gentle">Gentle</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="alarmVolume">Volume: <span id="volumeDisplay">70%</span></label>
+                        <input type="range" id="alarmVolume" min="0" max="100" value="70">
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="vibrate" checked> 
+                            Vibrate (Mobile)
+                        </label>
+                    </div>
+                </div>
+
+                <button id="createTimer" class="create-btn">
+                    <i class="fas fa-plus"></i>
+                    Create Reminder
+                </button>
+            </section>
+
+            <!-- Statistics -->
+            <section class="statistics">
+                <h2><i class="fas fa-chart-line"></i> Today's Activity</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-bell"></i>
+                        <div>
+                            <h3 id="todayReminders">0</h3>
+                            <p>Reminders</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <h3 id="todayCompleted">0</h3>
+                            <p>Completed</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-fire"></i>
+                        <div>
+                            <h3 id="streak">0</h3>
+                            <p>Day Streak</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Alarm Modal -->
+    <div id="alarmModal" class="modal">
+        <div class="modal-content alarm-content">
+            <div class="alarm-header">
+                <i class="fas fa-bell-slash alarm-icon"></i>
+                <h2 id="alarmTitle">Posture Check!</h2>
+            </div>
+            <div class="alarm-body">
+                <p id="alarmMessage">Time to check your posture and adjust your sitting position.</p>
+                <div class="alarm-timer">
+                    <span id="alarmDuration">00:00</span>
+                </div>
+            </div>
+            <div class="alarm-actions">
+                <button id="dismissAlarm" class="alarm-btn primary">
+                    <i class="fas fa-check"></i>
+                    Done!
+                </button>
+                <button id="snoozeAlarm" class="alarm-btn secondary">
+                    <i class="fas fa-clock"></i>
+                    Snooze 5 min
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio elements for alarms -->
+    <audio id="alarmAudio" loop>
+        <source src="" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
